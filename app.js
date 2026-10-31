@@ -1,6 +1,6 @@
 /**
- *  macOS Earnings Studio & Timeline Engine
- * Dynamic analytics, SVG rendering, interactive filter engine, and photo evolution lookbook.
+ *  macOS Earnings Studio & Lifetime Revenue Engine
+ * Consolidated earnings analytics, SVG trajectory visualization, interactive ledger, and milestone lookbook.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,11 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     sortBy: 'date-desc',
     currentPage: 1,
     pageSize: 20,
-    chartMetric: 'all', // Default to 'all' so Full Breakdown (Earned + Losses + Net line) is always shown
+    chartMetric: 'all', // 'all' (Combined), 'monthly', 'cumulative'
     activeCardId: null
   };
 
-  // Milestone metadata for Visual Journey lookbook (Correct Chronological Arc)
+  // Milestone metadata for Visual Journey lookbook (Earnings Arc & Tech Upgrades)
   const milestones = [
     {
       id: 'm-jun-2025',
@@ -33,35 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
       photoKey: 'photo_jun_2025'
     },
     {
-      id: 'm-jul-2025',
-      month: 'July 2025',
-      title: 'High Stakes & Testing',
-      earned: '-₹4,475.35',
-      caption: 'Initial experimentation phase with high transaction volume. Valuable lessons in risk and discipline.',
-      photoKey: 'photo_jul_2025'
-    },
-    {
-      id: 'm-aug-2025',
-      month: 'August 2025',
-      title: 'The Casino Turnaround',
-      earned: '+₹500.35',
-      caption: 'Net positive month with successful ₹1,000.35 bank withdrawal against ₹500 deposit.',
-      photoKey: 'photo_aug_2025'
-    },
-    {
-      id: 'm-oct-2025',
-      month: 'October 2025',
-      title: 'The Mindset Pivot',
-      earned: '-₹1,500.00',
-      caption: 'Final trial deposits (-₹1.5k) leading to the complete decision to focus 100% on real skills and freelancing.',
-      photoKey: 'photo_oct_2025'
+      id: 'm-fall-2025',
+      month: 'Jul – Dec 2025',
+      title: 'Skill Building & Foundation',
+      earned: 'Foundational',
+      caption: 'Dedicated focus on mastering software skills, digital asset creation, and building client freelance workflows.',
+      photoKey: 'photo_fall_2025'
     },
     {
       id: 'm-jan-2026',
       month: 'January 2026',
       title: 'College Freelance & Digital Launch',
       earned: '₹4,517.81',
-      caption: 'Dual revenue streams activated: student assignments (₹2,250) + digital product store launches (₹2,267.81).',
+      caption: 'Dual revenue streams activated: student project assignments (₹2,250) + digital product store launches (₹2,267.81).',
       photoKey: 'photo_jan_2026'
     },
     {
@@ -77,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       month: 'March 2026',
       title: 'Digital & Freelance Momentum',
       earned: '₹4,151.68',
-      caption: 'Consistent ₹4.1k month. College projects yielded ₹3,700 alongside steady passive digital purchases.',
+      caption: 'Consistent ₹4.1k month. College projects yielded ₹3,700 alongside steady passive digital asset purchases.',
       photoKey: 'photo_mar_2026'
     },
     {
@@ -85,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
       month: 'Apr – May 2026',
       title: 'Payment Gateway Integration',
       earned: '₹459.56',
-      caption: 'Automated Razorpay checkout integration tested across live micro-transactions.',
+      caption: 'Automated Razorpay checkout integration tested across live client transactions.',
       photoKey: 'photo_spring_2026'
     },
     {
@@ -93,13 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
       month: 'June 2026',
       title: 'The Agency Breakthrough',
       earned: '₹610.00',
-      caption: 'First trial payout from agency freelance contract (₹500) + Razorpay sales (₹110). The turning point.',
+      caption: 'First trial payout from agency freelance contract (₹500) + Razorpay sales (₹110). The professional turning point.',
       photoKey: 'photo_jun_2026'
     },
     {
       id: 'm-jul-2026',
       month: 'July 2026',
-      title: 'First Full Agency Salary',
+      title: 'First Full Agency Retainer',
       earned: '₹5,000.00',
       caption: 'Promoted to full agency retainer at ₹5,000/month. Steady predictable recurring income unlocked.',
       photoKey: 'photo_jul_2026'
@@ -109,22 +93,31 @@ document.addEventListener('DOMContentLoaded', () => {
       month: 'August 2026',
       title: 'Scaling into 5-Figures',
       earned: '₹12,500.00',
-      caption: 'Massive scale to ₹12,500 monthly agency compensation. Execution quality recognized.',
+      caption: 'Massive scale to ₹12,500 monthly agency compensation. Quality and reliability recognized.',
       photoKey: 'photo_aug_2026'
     },
     {
       id: 'm-sep-2026',
       month: 'September 2026',
-      title: 'Peak All-Time High',
+      title: 'Crossing ₹14,000',
       earned: '₹14,000.00',
-      caption: 'Record agency salary payout of ₹14,000 as of last month. Highest earning milestone to date.',
+      caption: 'Major agency compensation payout of ₹14,000. Building steady professional momentum.',
       photoKey: 'photo_sep_2026'
+    },
+    {
+      id: 'm-oct-2026',
+      month: 'October 2026',
+      title: 'Peak ₹15k & Poco X8 Pro Max',
+      earned: '₹15,000.00',
+      caption: 'Achieved new all-time high monthly salary of ₹15,000. Celebrated milestones by acquiring the Poco X8 Pro Max (₹47,200), resetting previous balances to a clean slate with ₹15k fresh in hand.',
+      photoKey: 'photo_oct_2026'
     }
   ];
 
   // 1. Clock in menubar
   function initClock() {
     const clockEl = document.getElementById('macClock');
+    if (!clockEl) return;
     function update() {
       const now = new Date();
       const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -142,7 +135,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }).format(val);
   }
 
-  // 3. Render SVG Chart
+  // 3. Update Dynamic KPI Elements
+  function updateKPICards() {
+    const totalEarnedEl = document.getElementById('kpiTotalEarned') || document.getElementById('kpiGrossEarned');
+    const agencyEl = document.getElementById('kpiAgencyTotal');
+    const collegeEl = document.getElementById('kpiCollegeTotal');
+    const digitalEl = document.getElementById('kpiDigitalTotal');
+
+    if (totalEarnedEl && data.summary) {
+      totalEarnedEl.textContent = formatINR(data.summary.total_earned);
+    }
+    if (agencyEl && data.summary) {
+      agencyEl.textContent = formatINR(data.summary.agency_salary);
+    }
+    if (collegeEl && data.summary) {
+      collegeEl.textContent = formatINR(data.summary.college_freelance);
+    }
+    if (digitalEl && data.summary) {
+      const digitalSum = (data.summary.digital_products || 0) + (data.summary.razorpay || 0) + (data.summary.review_work || 0);
+      digitalEl.textContent = formatINR(digitalSum);
+    }
+  }
+
+  // 4. Render SVG Chart (Positive Earnings Trajectory)
   function renderChart() {
     const wrapper = document.getElementById('svgChartWrapper');
     const timeline = data.monthly_timeline;
@@ -151,92 +166,100 @@ document.addEventListener('DOMContentLoaded', () => {
     const isMobile = window.innerWidth < 768;
     const width = wrapper.clientWidth || (isMobile ? window.innerWidth - 40 : 1000);
     const height = isMobile ? 310 : 340;
-    const padding = { 
-      top: 25, 
-      right: isMobile ? 18 : 28, 
-      bottom: isMobile ? 50 : 60, 
-      left: isMobile ? 48 : 58 
+    const padding = {
+      top: 25,
+      right: isMobile ? 24 : 45,
+      bottom: isMobile ? 50 : 60,
+      left: isMobile ? 48 : 58
     };
 
     const chartW = width - padding.left - padding.right;
     const chartH = height - padding.top - padding.bottom;
 
-    // Determine scale bounds with comfortable headroom
-    const maxVal = Math.max(...timeline.map(d => Math.max(d.earned, d.net_balance, 1000))) * 1.15;
-    const minVal = -5000; // Guaranteed headroom for -4475.35 loss bar
+    const maxMonthly = Math.max(...timeline.map(d => d.earned), 1000) * 1.15;
+    const maxCum = Math.max(...timeline.map(d => d.cumulative_earned), 1000) * 1.1;
 
-    function getY(val) {
-      const range = maxVal - minVal;
-      const normalized = (val - minVal) / range;
+    function getYMonthly(val) {
+      const normalized = Math.max(0, val) / maxMonthly;
+      return padding.top + chartH - (normalized * chartH);
+    }
+
+    function getYCum(val) {
+      const normalized = Math.max(0, val) / maxCum;
       return padding.top + chartH - (normalized * chartH);
     }
 
     const stepX = chartW / timeline.length;
+    const zeroY = padding.top + chartH;
 
-    // Grid lines
+    // Grid lines and Y-axis ticks
     let gridLinesSvg = '';
     const ticks = 4;
+
     for (let i = 0; i <= ticks; i++) {
-      const val = minVal + ((maxVal - minVal) / ticks) * i;
-      const y = getY(val);
+      const frac = i / ticks;
+      const y = padding.top + chartH - (frac * chartH);
+
       gridLinesSvg += `
         <line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" class="chart-grid-line" />
-        <text x="${padding.left - 8}" y="${y + 4}" class="chart-axis-text" text-anchor="end">₹${Math.round(val / 1000)}k</text>
       `;
+
+      if (state.chartMetric === 'cumulative') {
+        const valCum = maxCum * frac;
+        gridLinesSvg += `
+          <text x="${padding.left - 8}" y="${y + 4}" class="chart-axis-text" text-anchor="end">₹${Math.round(valCum / 1000)}k</text>
+        `;
+      } else {
+        const valMonthly = maxMonthly * frac;
+        gridLinesSvg += `
+          <text x="${padding.left - 8}" y="${y + 4}" class="chart-axis-text" text-anchor="end">₹${Math.round(valMonthly / 1000)}k</text>
+        `;
+        if (state.chartMetric === 'all' && !isMobile) {
+          const valCum = maxCum * frac;
+          gridLinesSvg += `
+            <text x="${width - padding.right + 8}" y="${y + 4}" class="chart-axis-text" fill="#38bdf8" text-anchor="start">₹${Math.round(valCum / 1000)}k</text>
+          `;
+        }
+      }
     }
 
-    // Zero Line
-    const zeroY = getY(0);
+    // Zero baseline
     const zeroLineSvg = `<line x1="${padding.left}" y1="${zeroY}" x2="${width - padding.right}" y2="${zeroY}" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />`;
 
-    // Bars & Points
+    // Bars, cumulative path, and points
     let barsSvg = '';
-    let linePoints = [];
+    let cumPoints = [];
     let labelsSvg = '';
 
     timeline.forEach((item, idx) => {
       const xCenter = padding.left + (idx + 0.5) * stepX;
-      const barWidth = Math.min(24, stepX * 0.55);
+      const barWidth = Math.min(26, stepX * 0.55);
       const barX = xCenter - barWidth / 2;
 
-      // Earned Bar (Positive, pointing up from zero line)
-      if (state.chartMetric === 'earned' || state.chartMetric === 'all') {
+      // Monthly Revenue Bar
+      if (state.chartMetric === 'monthly' || state.chartMetric === 'all') {
         if (item.earned > 0) {
-          const barHeight = Math.max(3, zeroY - getY(item.earned));
-          const barY = getY(item.earned);
+          const barY = getYMonthly(item.earned);
+          const barHeight = Math.max(3, zeroY - barY);
           barsSvg += `
             <rect x="${barX}" y="${barY}" width="${barWidth}" height="${barHeight}" rx="4" class="chart-bar-earned" data-month="${item.label}">
               <title>${item.label}: Earned ₹${formatINR(item.earned)}</title>
             </rect>
           `;
         } else {
-          // Zero earned indicator
           barsSvg += `
-            <rect x="${barX}" y="${zeroY - 1}" width="${barWidth}" height="2" rx="1" fill="rgba(255,255,255,0.25)" data-month="${item.label}">
-              <title>${item.label}: ₹0.00 Earned</title>
+            <rect x="${barX}" y="${zeroY - 2}" width="${barWidth}" height="2" rx="1" fill="rgba(255,255,255,0.25)" data-month="${item.label}">
+              <title>${item.label}: ₹0.00</title>
             </rect>
           `;
         }
       }
 
-      // Gambling Loss Bar (Negative, pointing down below zero line) - Always visible in all views (including Earned Revenue)
-      if (item.gambling_net < 0) {
-        const lossHeight = Math.max(3, getY(item.gambling_net) - zeroY);
-        const lossY = zeroY;
-        barsSvg += `
-          <rect x="${barX}" y="${lossY}" width="${barWidth}" height="${lossHeight}" rx="4" class="chart-bar-loss" data-month="${item.label}">
-            <title>${item.label}: Gambling Loss -₹${formatINR(Math.abs(item.gambling_net))}</title>
-          </rect>
-        `;
-      }
+      // Cumulative Point calculation
+      const cumY = getYCum(item.cumulative_earned);
+      cumPoints.push({ x: xCenter, y: cumY, label: item.label, cum: item.cumulative_earned, earned: item.earned });
 
-      // Net Line point
-      if (state.chartMetric === 'net' || state.chartMetric === 'all') {
-        const netY = getY(item.net_balance);
-        linePoints.push(`${xCenter},${netY}`);
-      }
-
-      // Month Label on X-axis (with ample bottom clearance)
+      // Month Label on X-axis
       labelsSvg += `
         <text x="${xCenter}" y="${height - 16}" class="chart-axis-text chart-month-label" text-anchor="middle" cursor="pointer" data-month="${item.label}">
           ${item.short_label}
@@ -244,19 +267,37 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     });
 
-    // Net line path
+    // Cumulative Line & Area SVG
     let lineSvg = '';
-    if (linePoints.length && (state.chartMetric === 'net' || state.chartMetric === 'all')) {
-      const pathD = `M ${linePoints.join(' L ')}`;
+    if (cumPoints.length && (state.chartMetric === 'cumulative' || state.chartMetric === 'all')) {
+      const pts = cumPoints.map(p => `${p.x},${p.y}`).join(' L ');
+      const pathD = `M ${pts}`;
+
+      // Subtle area fill in cumulative view
+      let areaSvg = '';
+      if (state.chartMetric === 'cumulative') {
+        const firstX = cumPoints[0].x;
+        const lastX = cumPoints[cumPoints.length - 1].x;
+        const areaD = `M ${firstX},${zeroY} L ${pts} L ${lastX},${zeroY} Z`;
+        areaSvg = `
+          <defs>
+            <linearGradient id="cumAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.28" />
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+          <path d="${areaD}" fill="url(#cumAreaGrad)" />
+        `;
+      }
+
       lineSvg = `
+        ${areaSvg}
         <path d="${pathD}" class="chart-line-net" />
-        ${timeline.map((item, idx) => {
-          const xCenter = padding.left + (idx + 0.5) * stepX;
-          const netY = getY(item.net_balance);
-          return `<circle cx="${xCenter}" cy="${netY}" r="4" class="chart-point-net" data-month="${item.label}">
-            <title>${item.label} Net: ₹${formatINR(item.net_balance)}</title>
-          </circle>`;
-        }).join('')}
+        ${cumPoints.map(p => `
+          <circle cx="${p.x}" cy="${p.y}" r="4" class="chart-point-net" data-month="${p.label}">
+            <title>${p.label} Cumulative: ₹${formatINR(p.cum)} (Month: ₹${formatINR(p.earned)})</title>
+          </circle>
+        `).join('')}
       `;
     }
 
@@ -270,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </svg>
     `;
 
-    // Click handler on chart elements
+    // Click handler on chart elements to filter by month
     wrapper.querySelectorAll('[data-month]').forEach(elem => {
       elem.addEventListener('click', () => {
         const m = elem.getAttribute('data-month');
@@ -279,20 +320,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Render Timeline Milestone Cards
+  // 5. Render Timeline Milestone Cards
   function renderTimelineCards() {
     const track = document.getElementById('timelineCardsTrack');
     if (!track) return;
 
     track.innerHTML = data.monthly_timeline.map(item => {
       const isSelected = state.selectedMonth === item.label;
-      const isNegative = item.net_balance < 0;
-      const streams = item.categories_present.length ? item.categories_present.join(' • ') : 'Inactive';
+      const streams = item.categories_present.length ? item.categories_present.join(' • ') : 'Completed';
       return `
         <div class="month-milestone-card ${isSelected ? 'selected' : ''}" data-month="${item.label}">
           <span class="card-month-badge">${item.label}</span>
-          <span class="card-month-net ${isNegative ? 'text-danger' : ''}">₹${formatINR(item.net_balance)}</span>
-          <span class="card-month-streams">${streams} (${item.tx_count} txns)</span>
+          <span class="card-month-net">₹${formatINR(item.earned)}</span>
+          <span class="card-month-streams">${streams} (${item.tx_count} txn${item.tx_count > 1 ? 's' : ''})</span>
         </div>
       `;
     }).join('');
@@ -309,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Render Visual Journey Evolution Cards
+  // 6. Render Visual Journey Evolution Cards
   function renderEvolutionGrid() {
     const grid = document.getElementById('evolutionGrid');
     if (!grid) return;
@@ -356,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }).join('');
 
-    // Attach Photo upload click handlers
+    // Attach photo upload click handlers
     grid.querySelectorAll('.photo-frame').forEach(frame => {
       frame.addEventListener('click', () => {
         const key = frame.getAttribute('data-key');
@@ -366,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Photo Upload Modal Logic
+  // 7. Photo Upload Modal Logic
   let currentTargetKey = null;
   const photoModal = document.getElementById('photoModal');
   const modalTitle = document.getElementById('photoModalTitle');
@@ -378,14 +418,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openPhotoModal(key, title) {
     currentTargetKey = key;
-    modalTitle.textContent = `Milestone: ${title}`;
-    modalCaptionInput.value = '';
-    modalFileInput.value = '';
-    photoModal.classList.add('open');
+    if (modalTitle) modalTitle.textContent = `Milestone: ${title}`;
+    if (modalCaptionInput) modalCaptionInput.value = '';
+    if (modalFileInput) modalFileInput.value = '';
+    if (photoModal) photoModal.classList.add('open');
   }
 
   function closePhotoModal() {
-    photoModal.classList.remove('open');
+    if (photoModal) photoModal.classList.remove('open');
     currentTargetKey = null;
   }
 
@@ -393,7 +433,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cancelPhotoModalBtn) cancelPhotoModalBtn.addEventListener('click', closePhotoModal);
 
   if (uploadDropzone) {
-    uploadDropzone.addEventListener('click', () => modalFileInput.click());
+    uploadDropzone.addEventListener('click', () => {
+      if (modalFileInput) modalFileInput.click();
+    });
     uploadDropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
       uploadDropzone.style.borderColor = 'var(--accent-primary)';
@@ -435,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsDataURL(file);
   }
 
-  // 7. Filter & Render Transactions Table
+  // 8. Filter & Render Transactions Table
   function getFilteredTransactions() {
     return data.transactions.filter(item => {
       if (state.selectedCategory !== 'all' && item.category_id !== state.selectedCategory) {
@@ -491,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update section heading dynamically
     if (heading) {
       if (state.selectedMonth) {
-        heading.textContent = `${state.selectedMonth} Transactions (${totalCount} Records)`;
+        heading.textContent = `${state.selectedMonth} Earnings (${totalCount} Records)`;
       } else if (state.selectedCategory !== 'all') {
         const catObj = data.categories.find(c => c.id === state.selectedCategory);
         heading.textContent = `${catObj ? catObj.name : state.selectedCategory} (${totalCount} Records)`;
@@ -504,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Informative meta bar with interactive clear chip
     if (state.selectedMonth) {
-      showingCount.innerHTML = `Showing <strong>${pageItems.length}</strong> of <strong>${totalCount}</strong> for <strong>${state.selectedMonth}</strong> <span style="color:var(--text-muted); font-size:11px;">(Filtered from ${grandTotal} total)</span> <button class="filter-clear-chip" id="clearMonthChip" title="Click to view all 154 transactions">✕ Clear Month Filter</button>`;
+      showingCount.innerHTML = `Showing <strong>${pageItems.length}</strong> of <strong>${totalCount}</strong> for <strong>${state.selectedMonth}</strong> <span style="color:var(--text-muted); font-size:11px;">(Filtered from ${grandTotal} total)</span> <button class="filter-clear-chip" id="clearMonthChip" title="Click to view all transactions">✕ Clear Month Filter</button>`;
       setTimeout(() => {
         const clearBtn = document.getElementById('clearMonthChip');
         if (clearBtn) clearBtn.onclick = () => filterByMonth(null);
@@ -528,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tbody.innerHTML = `
         <tr>
           <td colspan="6" style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
-            No transactions found matching the current filters.
+            No earning records found matching the current filters.
           </td>
         </tr>
       `;
@@ -536,8 +578,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     tbody.innerHTML = pageItems.map(tx => {
-      const isDebit = tx.amount < 0 || (tx.category_id === 'gambling' && tx.type === 'Deposit');
-      const amountClass = isDebit ? 'amount-debit' : 'amount-credit';
       const statusClass = tx.status === 'Completed' ? 'status-completed' : 'status-cancelled';
 
       return `
@@ -561,8 +601,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="status-badge ${statusClass}">${tx.status}</span>
           </td>
           <td class="text-right">
-            <span class="amount-cell ${amountClass}">
-              ${tx.amount < 0 ? '-' : '+'}₹${formatINR(Math.abs(tx.amount))}
+            <span class="amount-cell amount-credit">
+              +₹${formatINR(tx.amount)}
             </span>
           </td>
         </tr>
@@ -570,7 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
-  // 8. Event Listeners & Filter Handlers
+  // 9. Filter Handlers & Listeners
   function filterByMonth(monthLabel) {
     state.selectedMonth = monthLabel;
     state.currentPage = 1;
@@ -699,6 +739,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize
   initClock();
+  updateKPICards();
   renderChart();
   renderTimelineCards();
   renderEvolutionGrid();

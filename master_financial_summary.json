@@ -1,22 +1,24 @@
 {
   "currency": "INR",
   "totals": {
-    "gross_earned": 47991.85,
-    "gambling_deposits": 17000.0,
-    "gambling_withdrawals": 11525.0,
-    "gambling_net_loss": -5475.0,
-    "net_pocket_balance": 42516.85,
-    "total_cash_inflow": 59516.85,
-    "total_outflow": 17000.0
+    "total_earned": 62991.85,
+    "total_transactions": 94,
+    "agency_salary": 47000.0,
+    "college_freelance": 10919.0,
+    "digital_products": 4413.29,
+    "razorpay": 569.56,
+    "review_work": 90.0,
+    "peak_monthly_earning": 15000.0,
+    "peak_month": "October 2026"
   },
   "categories": [
     {
       "id": "agency",
       "name": "Agency Salary",
       "color": "#dcf836",
-      "amount": 32000.0,
-      "tx_count": 4,
-      "share": 66.68,
+      "amount": 47000.0,
+      "tx_count": 5,
+      "share": 74.61,
       "icon": "briefcase"
     },
     {
@@ -25,7 +27,7 @@
       "color": "#b4f044",
       "amount": 10919.0,
       "tx_count": 12,
-      "share": 22.75,
+      "share": 17.33,
       "icon": "graduation"
     },
     {
@@ -33,8 +35,8 @@
       "name": "Digital Products",
       "color": "#f2f059",
       "amount": 4413.29,
-      "tx_count": 33,
-      "share": 9.2,
+      "tx_count": 25,
+      "share": 7.01,
       "icon": "shopping-bag"
     },
     {
@@ -43,7 +45,7 @@
       "color": "#8ef57e",
       "amount": 569.56,
       "tx_count": 51,
-      "share": 1.19,
+      "share": 0.9,
       "icon": "credit-card"
     },
     {
@@ -52,17 +54,8 @@
       "color": "#d7f283",
       "amount": 90.0,
       "tx_count": 1,
-      "share": 0.19,
+      "share": 0.14,
       "icon": "star"
-    },
-    {
-      "id": "gambling",
-      "name": "Gambling Portfolio",
-      "color": "#ff5f5f",
-      "amount": -5475.0,
-      "tx_count": 61,
-      "share": 0.0,
-      "icon": "dice"
     }
   ],
   "monthly_timeline": [
@@ -72,58 +65,10 @@
       "label": "June 2025",
       "short_label": "Jun '25",
       "earned": 90.0,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 90.0,
+      "cumulative_earned": 90.0,
       "tx_count": 1,
       "categories_present": [
         "Review Work"
-      ]
-    },
-    {
-      "month": "July",
-      "year": 2025,
-      "label": "July 2025",
-      "short_label": "Jul '25",
-      "earned": 0,
-      "gambling_net": -4475.35,
-      "gambling_deposits": 15000.0,
-      "gambling_withdrawals": 10524.65,
-      "net_balance": -4475.35,
-      "tx_count": 53,
-      "categories_present": [
-        "Gambling Portfolio"
-      ]
-    },
-    {
-      "month": "August",
-      "year": 2025,
-      "label": "August 2025",
-      "short_label": "Aug '25",
-      "earned": 0,
-      "gambling_net": 500.35,
-      "gambling_deposits": 500.0,
-      "gambling_withdrawals": 1000.35,
-      "net_balance": 500.35,
-      "tx_count": 6,
-      "categories_present": [
-        "Gambling Portfolio"
-      ]
-    },
-    {
-      "month": "October",
-      "year": 2025,
-      "label": "October 2025",
-      "short_label": "Oct '25",
-      "earned": 0,
-      "gambling_net": -1500.0,
-      "gambling_deposits": 1500.0,
-      "gambling_withdrawals": 0,
-      "net_balance": -1500.0,
-      "tx_count": 2,
-      "categories_present": [
-        "Gambling Portfolio"
       ]
     },
     {
@@ -132,14 +77,11 @@
       "label": "January 2026",
       "short_label": "Jan '26",
       "earned": 4517.81,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 4517.81,
+      "cumulative_earned": 4607.81,
       "tx_count": 13,
       "categories_present": [
-        "Digital Products",
-        "College Freelance"
+        "College Freelance",
+        "Digital Products"
       ]
     },
     {
@@ -148,14 +90,11 @@
       "label": "February 2026",
       "short_label": "Feb '26",
       "earned": 6662.8,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 6662.8,
+      "cumulative_earned": 11270.61,
       "tx_count": 18,
       "categories_present": [
-        "Digital Products",
-        "College Freelance"
+        "College Freelance",
+        "Digital Products"
       ]
     },
     {
@@ -164,14 +103,11 @@
       "label": "March 2026",
       "short_label": "Mar '26",
       "earned": 4151.68,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 4151.68,
+      "cumulative_earned": 15422.29,
       "tx_count": 6,
       "categories_present": [
-        "Digital Products",
-        "College Freelance"
+        "College Freelance",
+        "Digital Products"
       ]
     },
     {
@@ -180,10 +116,7 @@
       "label": "April 2026",
       "short_label": "Apr '26",
       "earned": 146.55,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 146.55,
+      "cumulative_earned": 15568.84,
       "tx_count": 42,
       "categories_present": [
         "Razorpay"
@@ -195,10 +128,7 @@
       "label": "May 2026",
       "short_label": "May '26",
       "earned": 313.01,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 313.01,
+      "cumulative_earned": 15881.85,
       "tx_count": 8,
       "categories_present": [
         "Razorpay"
@@ -210,10 +140,7 @@
       "label": "June 2026",
       "short_label": "Jun '26",
       "earned": 610.0,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 610.0,
+      "cumulative_earned": 16491.85,
       "tx_count": 2,
       "categories_present": [
         "Razorpay",
@@ -226,10 +153,7 @@
       "label": "July 2026",
       "short_label": "Jul '26",
       "earned": 5000.0,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 5000.0,
+      "cumulative_earned": 21491.85,
       "tx_count": 1,
       "categories_present": [
         "Agency Salary"
@@ -241,10 +165,7 @@
       "label": "August 2026",
       "short_label": "Aug '26",
       "earned": 12500.0,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 12500.0,
+      "cumulative_earned": 33991.85,
       "tx_count": 1,
       "categories_present": [
         "Agency Salary"
@@ -256,10 +177,19 @@
       "label": "September 2026",
       "short_label": "Sep '26",
       "earned": 14000.0,
-      "gambling_net": 0,
-      "gambling_deposits": 0,
-      "gambling_withdrawals": 0,
-      "net_balance": 14000.0,
+      "cumulative_earned": 47991.85,
+      "tx_count": 1,
+      "categories_present": [
+        "Agency Salary"
+      ]
+    },
+    {
+      "month": "October",
+      "year": 2026,
+      "label": "October 2026",
+      "short_label": "Oct '26",
+      "earned": 15000.0,
+      "cumulative_earned": 62991.85,
       "tx_count": 1,
       "categories_present": [
         "Agency Salary"
